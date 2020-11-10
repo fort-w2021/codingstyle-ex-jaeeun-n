@@ -1,29 +1,28 @@
 ## Frisch aus dem Trockner, gut für die *confidence*
 
 ```{r eval = FALSE, tidy=FALSE}
-x<-rnorm(100)
-y<-rnorm(100)
-z<-rnorm(100)
-v=z^2  
+x <- rnorm(100)
+y <- rnorm(100)
+z <- rnorm(100)
+v <- z^2
 
-m <- mean(x); s <- sd(x); n <- length(x)
-c(m - 1.96*s/sqrt(n), m + 1.96*s/sqrt(n))
+# Die Funktion soll das Konfidenzintervall zu einem numerischen Vektor
+# ausgeben.
+calculate_confidence_interval <- function(data) {
+  checkmate::assert_atomic_vector(data)
+  checkmate::assert_numeric(data)
+  
+  observation_count <- length(data)
+  data_mean <- mean(data)
+  data_sd <- sd(data)
+  half_width <- 1.96 * data_sd / sqrt(observation_count)
+  c(data_mean - half_width, data_mean + half_width)
+}
 
-m <- mean(y)
-s <- sd(y)
-n <- length(y)
-c(m - 1.96*s/sqrt(n), m + 1.96*s/sqrt(n))
-
-n <- length(z)
-m <-  mean(z)
-s <-sd(z)
-c(m-1.96*s/sqrt(n),m+1.96*s/sqrt(n))
-
-n <- length(v)
-m <- mean(v)
-s <- sd(v)
-half_width <- 1.96*s/sqrt(n)
-c(m - half_width, m + half_width)
+calculate_confidence_interval(x)
+calculate_confidence_interval(y)
+calculate_confidence_interval(z)
+calculate_confidence_interval(v)
 ``` 
 
 Bei so abscheulichem "copy-paste-modify" Code wie dem hier sollten Sie direkt schweiß*nasse* Hände bekommen, denn "**w**rite **e**verything **t**wice" ist der sichere Weg ins Verderben.  

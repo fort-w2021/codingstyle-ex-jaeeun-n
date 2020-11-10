@@ -4,10 +4,21 @@
 
 Suchen Sie ein R-Skript aus Ihren alten Kursunterlagen, Praktikumsprojekten, Seminarvorträgen etc. heraus (idealerweise so 50 - 200 Zeilen) das Ihnen unsauber oder chaotisch vorkommt, von dem Sie aber noch wissen was es tun soll. Kopieren Sie das Ding in ihr Git-Repository und committen Sie es erst mal mitsamt all seinen Warzen, Geschwüren und sonstigen Unzulänglichkeiten (s.a. Bild oben). 
 
+Code: sanierungsfall.R 
+
 a) Bringen Sie das Skript mit der Hilfe des  "Style Active File" RStudio-Addins aus dem `styler`-Paket auf Vordermann. Verbessern sie die Benamung von Funktionen und Variablen und stellen Sie sicher dass Ihr Code die Richtlinien in Hadley Wickham's [style guide](http://r-pkgs.had.co.nz/style.html) befolgt. Speichern Sie das verbesserte File unter einem neuen (besseren) Namen ab.
+
+Code: sanierungsfall_erste_sanierung.R
 
 b) Betrachten Sie Ihren Code kritisch im Hinblick auf die angesprochenen "Code Smells" (s. Materialien zu Programmierstil & Programmentwurf) -- riechen Sie was? Notieren Sie was Ihnen im alten Code ungünstig erscheint und ergreifen Sie entsprechende Gegenmaßnahmen. 
 Speichern Sie das nochmals verbesserte File unter einem neuen (besseren) Namen ab.
+
+Code: fehlt, da er leider (noch) nicht funktioniert
+
+Code Smells bzw. Gegenmaßnahmen:
+- Bestimmung der Modellgüte für GBM und GLM vereinheitlichen und als Funktion kodieren?
+- Modellfit und -bewertung für GBM und GLM jeweils oder zusammen als große Funktion, um sie für andere Inputs zu verwenden, z.b. frühere oder spätere Befragungen und/oder andere Kovariablen und/oder andere Optimierungskriterien?
+- evtl. zu lange Namen für Variablen?
 
 c) Auf einer Skala von 1-10, wie viel verständlicher und lesbarer ist der korrigierte Code?
 

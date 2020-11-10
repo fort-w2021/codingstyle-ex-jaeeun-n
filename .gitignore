@@ -19,6 +19,7 @@
 
 # RStudio files
 .Rproj.user/
+codingstyle-ex-jaeeun-n.Rproj
 
 # produced vignettes
 vignettes/*.html

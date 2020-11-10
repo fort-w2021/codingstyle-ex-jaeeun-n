@@ -16,31 +16,25 @@ Vereinfachen Sie folgende Funktion, ohne ihre Funktionsweise zu verändern:
 #   profile: list object representing the profile of the person who is being swiped left or right
 # output: TRUE/FALSE
 swipe_right <- function(swiper, profile) {
-  if (profile[["has_picture"]]) {
-    if (profile[["picture_attractive"]]) {
-      if (swiper[["sober"]]) {
-        if (!all(is.na(profile[["likes"]]))) {
-          if (profile[["rather_weird"]]) {
-            return(FALSE)
-          } else {
-            if (any(swiper[["likes"]] %in% profile[["likes"]])) {
-              return(TRUE)
-            } else {
-              return(FALSE)
-            }
-          }
-        } else {
-          stop("can't decide without informative profile.")
-        }
-      } else {
-        return(TRUE)
-      }
-    } else {
-      return(FALSE)
-    }
-  } else {
+  if (!profile[["has_picture"]]) {
     stop("can't decide without a picture.")
   }
+  if (!profile[["picture_attractive"]]) {
+    return(FALSE)
+  }
+  if (!swiper[["sober"]]) {
+    return(TRUE)
+  }
+  if (profile[["rather_weird"]]) {
+    return(FALSE)
+  }
+  if (all(is.na(profile[["likes"]]))) {
+    stop("can't decide without informative profile.")
+  }
+  if (any(swiper[["likes"]] %in% profile[["likes"]])) {
+    return(TRUE)
+  }
+  FALSE
 }
 ```
 
@@ -71,13 +65,38 @@ test_profiles <- list(
 )
 
 # check all combinations:
-for(swiper in names(test_swipers)) {
-  for(profile in names(test_profiles)) {
+for (swiper in names(test_swipers)) {
+  for (profile in names(test_profiles)) {
     cat("Does", swiper, "swipe right on", profile, "?",
         try(swipe_right(test_swipers[[swiper]], test_profiles[[profile]]), silent = TRUE),
         "\n")
   }
 }
+
+# test_that alternative
+testthat::test_that("does the right thing for sober swiper", {
+  sober_swiper <- test_swipers[, 'sober_swiper']
+  
+  expect_true(swipe_right(sober_swiper, test_profiles[, 'hot_1']))
+  
+  expect_false(swipe_right(sober_swiper, test_profiles[, 'hot_2']))
+  expect_false(swipe_right(sober_swiper, test_profiles[, 'hotweird']))
+  expect_false(swipe_right(sober_swiper, test_profiles[, 'nothot_1']))
+  expect_false(swipe_right(sober_swiper, test_profiles[, 'nothot_1']))
+  
+  expect_error(swipe_right(sober_swiper, test_profiles[, 'no_pic']))
+})
+
+testthat::test_that("does the right thing for drunk swiper", {
+  drunk_swiper <- test_swipers[, 'drunk_swiper']
+  
+  expect_true(swipe_right(drunk_swiper, test_profiles[, 'hot_1']))
+  expect_true(swipe_right(drunk_swiper, test_profiles[, 'hotweird']))
+  
+  expect_false(swipe_right(drunk_swiper, test_profiles[, 'nothot_1']))
+  
+  expect_error(swipe_right(drunk_swiper, test_profiles[, 'no_pic']))
+})
 ```
 
 

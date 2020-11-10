@@ -190,28 +190,3 @@ df2.mod.test$glm.df2.pred.bin <- glm.df2.pred.bin
 
 confusionMatrix(df2.mod.test$f1_2, df2.mod.test$glm.df2.pred.bin, positive = "1") # Acc 0.6103
 
-
-### Korrelationen ####
-str(df2.mod)
-# nehme nur numerische Kovariablen
-df2.num <- df2.mod %>%
-  select(f1_2, alter, hh_gr_num, orts_gr_num, nek_hh_num, kindhh_num)
-summary(df2.num)
-
-corrs <- cor(df2.num, method = "spearman", use = "complete.obs")
-round(corrs, 2)
-corrplot::corrplot(corrs,
-                   method = "number", tl.col = "black", tl.srt = 45)
-
-# forciere Numerisierung
-# nicht numerische Kovariablen:
-# Geschlecht, Schulbildung, Trend, Bundesgebiet, Miete, Berufstätigkeit
-df2.num.force <- df2.mod %>%
-  mutate_all(as.numeric)
-corrs.force <- cor(df2.num.force, method = "spearman", use = "complete.obs")
-round(corrs.force, 2)
-corrplot::corrplot(corrs.force,
-                   method = "number",
-                   tl.col = "black", tl.srt = 45, number.cex = 0.9)
-
-
